@@ -50,7 +50,7 @@ yum clean all
 yum -y update
 
 # install all other requisite packages for PHP-FPM + Nginx
-yum -y install php* nginx unixODBC unixODBC-devel findutils
+yum -y install php* nginx unixODBC unixODBC-devel findutils rsync
 
 # move errant php.ini location (remove after IBM releases fix)
 PHPINIFROM=/QOpenSys/etc/php.ini
@@ -66,14 +66,14 @@ cd $SCRIPT_DIR
 
 # remove files from prior runs if user supplies flag
 if [[ $* == *--nuke-files* ]]; then
-  rm -rf /www/.nginx
-  rm -rf /www/.php
-  rm -rf /www/.www-menu
+  cp -r .nginx /www/
+  cp -r .php /www/
+  cp -r .www-menu /www/
+else
+  rsync -zavh .nginx /www/
+  rsync -zavh .php /www/
+  rsync -zavh .www-menu /www/
 fi
-
-cp -r .nginx /www/
-cp -r .php /www/
-cp -r .www-menu /www/
 
 ###################################################
 # Install IBM i Access ODBC Driver via Yum
