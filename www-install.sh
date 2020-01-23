@@ -205,6 +205,7 @@ PORT="9090"
 read -p "PHP-FPM Upstream Port [$PORT]: " I_PORT
 I_PORT=${I_PORT:-$PORT}
 sed -i "/listen = 127.0.0.1:/c\\listen = 127.0.0.1:$I_PORT" /QOpenSys/etc/php/php-fpm.d/www.conf
+sed -i "/server 127.0.0.1:/c\\        server 127.0.0.1:$I_PORT;" /www/.nginx/nginx.conf
 
 # move fastcgi script into place
 rm -rf /QOpenSys/etc/nginx/snippets
