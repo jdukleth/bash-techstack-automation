@@ -38,9 +38,6 @@ Here's a few things this script does that you may want to fork & modify to your 
 * Nginx and PHP-FPM are run as the QTMHHTTP user
 * .nginx and .php are stored in /www
 * The WWW menu creates a library called WWWMENU on your system
-* A few php.ini default settings are changed (see script)
-* PHP-FPM upstream port is changed to :9090 (from :9000) to avoid conflict with ZendServer
-* odbc.ini database points to your system serial number
 
 # Useful Paths
 
