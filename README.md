@@ -1,6 +1,6 @@
 # Prerequisites
 
- * YUM installed on an IBM i (shorturl.at/duz02)
+ * YUM installed on an IBM i (https://tinyurl.com/r847v6r)
  * BASH terminal (don't use PASE)
  * SSH in on user with appropriate privileges
 
@@ -33,9 +33,11 @@ If you want to overwrite .nginx/.php/.www-menu folders from prior runs add the -
 
 Here's a few things this script does that you may want to fork & modify to your liking
 
+* runs a `yum update`
+* installs all available PHP extensions (disable-at-will)
 * Nginx and PHP-FPM are run as the QTMHHTTP user
 * .nginx and .php are stored in /www
 * The WWW menu creates a library called WWWMENU on your system
 * A few php.ini default settings are changed (see script)
-* PHP-FPM upstream port is changed to :9090 to avoid conflict with ZendServer
+* PHP-FPM upstream port is changed to :9090 (from :9000) to avoid conflict with ZendServer
 * odbc.ini database points to your system serial number
