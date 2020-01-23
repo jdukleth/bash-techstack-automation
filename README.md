@@ -10,7 +10,7 @@ Git clone repo OR download and unzip folder onto target server
 
 ```git clone https://github.com/jdukleth/ibmi-www-install-script-files.git```
 
-Run these commands from BASH (not PASE)
+Run these commands from BASH (not PASE) terminal on target server
 
 ```
 chmod +x www-install.sh
@@ -41,3 +41,13 @@ Here's a few things this script does that you may want to fork & modify to your 
 * A few php.ini default settings are changed (see script)
 * PHP-FPM upstream port is changed to :9090 (from :9000) to avoid conflict with ZendServer
 * odbc.ini database points to your system serial number
+
+# Useful Paths
+
+* /QOpenSys/etc/odbc.ini          # ODBC config
+* /QOpenSys/etc/nginx             # Nginx install directory
+* /QOpenSys/etc/php               # PHP-FPM install directory
+* /QOpenSys/pkgs/bin/nginx        # Nginx executable
+* /QOpenSys/pkgs/sbin/php-fpm     # PHP-FPM executable
+* /www/.php                       # Opinionated logs/storage location
+* /www/.nginx                     # Opinionated logs/configs location
