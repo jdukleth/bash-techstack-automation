@@ -50,7 +50,7 @@ yum clean all
 yum -y update
 
 # install all other requisite packages for PHP-FPM + Nginx
-yum -y install php* nginx unixODBC unixODBC-devel sed-gnu
+yum -y install php* nginx unixODBC unixODBC-devel sed-gnu rsync
 
 # move errant php.ini location (remove after IBM releases fix)
 PHPINIFROM=/QOpenSys/etc/php.ini
@@ -70,9 +70,9 @@ if [[ $* == *--nuke-files* ]]; then
   cp -r .php /www/
   cp -r .www-menu /www/
 else
-  cp -r -n .nginx /www/
-  cp -r -n .php /www/
-  cp -r -n .www-menu /www/
+  rsync -zavh --ignore-existing .nginx /www/
+  rsync -zavh --ignore-existing .php /www/
+  rsync -zavh --ignore-existing .www-menu /www/
 fi
 
 ###################################################
