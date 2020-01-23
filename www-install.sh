@@ -79,7 +79,7 @@ cp -r .www-menu /www/
 # Install IBM i Access ODBC Driver via Yum
 ###################################################
 cd /www/.php/pase-acs/ppc64
-yum install ibm-iaccess-*
+yum -y install ibm-iaccess-*
 
 ###################################################
 # extract SAVF files for WWW menu
