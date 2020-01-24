@@ -220,9 +220,8 @@ I_PORT=${I_PORT:-$PORT}
 sed -i "/listen = 127.0.0.1:/c\\listen = 127.0.0.1:$I_PORT" /QOpenSys/etc/php/php-fpm.d/www.conf
 sed -i "/server 127.0.0.1:/c\\        server 127.0.0.1:$I_PORT;" /www/.nginx/nginx.conf
 
-# move fastcgi script into place
-rm -rf /QOpenSys/etc/nginx/snippets
-mv /www/.nginx/snippets /QOpenSys/etc/nginx/
+# put fastcgi script into place
+rsync -zavh /www/.nginx/snippets /QOpenSys/etc/nginx/ > /dev/null 2>&1
 
 ###################################################
 # ODBC: Configuration & Settings
@@ -233,9 +232,8 @@ printf "#########################\n"
 printf "#     ODBC SETTINGS     #\n"
 printf "#########################\n"
 
-# overwrite ODBC config file
-rm /QOpenSys/etc/odbc.ini
-mv /www/.php/odbc.ini /QOpenSys/etc/
+# copy ODBC config file into place
+cp /www/.php/odbc.ini /QOpenSys/etc/
 
 SRLNBR=$(system 'wrksysval qsrlnbr' | grep QSRLNBR | awk '{print $2}')
 DATABASE="S${SRLNBR}"
@@ -255,5 +253,4 @@ sed -i "s/USERNAME_HERE/$I_ODBC_USERNAME/g" /QOpenSys/etc/odbc.ini
 read -p "ODBC password: " I_ODBC_PASSWORD
 sed -i "s/PASSWORD_HERE/$I_ODBC_PASSWORD/g" /QOpenSys/etc/odbc.ini
 
-# TODO: prompt for USER to run PHP/Nginx on WWW Menu
 # TODO: prettify success/no-change output and keep error output raw
