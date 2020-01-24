@@ -34,7 +34,6 @@ Here's a few things this script does that you may want to fork & modify to your 
 
 * runs a `yum update`
 * installs all available PHP extensions (disable-at-will)
-* Nginx and PHP-FPM are run as the QTMHHTTP user
 * logs & configs are stored in /www/.nginx and /www/.php for convenience
 * The WWW menu creates a library called WWWMENU on your system
 
