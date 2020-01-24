@@ -91,7 +91,6 @@ yum -y install ibm-iaccess-*
 system 'DLTOBJ OBJ(QGPL/WWWSAVF) OBJTYPE(*FILE)'
 system 'CRTSAVF FILE(QGPL/WWWSAVF)'
 system "CPYFRMSTMF FROMSTMF('/www/.www-menu/WWWSAVF') TOMBR('/QSYS.LIB/QGPL.LIB/WWWSAVF.FILE') MBROPT(*REPLACE)"
-system 'DLTLIB LIB(WWWTEMP)'
 system 'RSTLIB SAVLIB(SATOOLS4) DEV(*SAVF) SAVF(QGPL/WWWSAVF) RSTLIB(WWWMENU)'
 
 # create files that Screen Design Assistant (SDA) would normally generate
@@ -106,15 +105,28 @@ system 'CRTCLPGM PGM(WWWMENU/WWW) SRCFILE(WWWMENU/QCLSRC)'
 # create 'WWW' system command
 system 'CRTCMD PGM(WWWMENU/WWW) CMD(QGPL/WWW) SRCFILE(WWWMENU/QCMDSRC)'
 
+printf "\n\n"
+printf "#########################\n"
+printf "#        WWW MENU       #\n"
+printf "#########################\n"
+
+NGINX_USER="QTMHHTTP"
+read -p "Job User for Nginx [$NGINX_USER]: " I_NGINX_USER
+I_NGINX_USER=${I_NGINX_USER:-$NGINX_USER}
+
+PHPFPM_USER="QTMHHTTP"
+read -p "Job User for PHP-FPM [$PHPFPM_USER]: " I_PHPFPM_USER
+I_PHPFPM_USER=${I_PHPFPM_USER:-$PHPFPM_USER}
+
 # tie commands to menu options
 system "ADDMSGD MSGID(USR0001) MSGF(WWWMENU/WWWMNU1) MSG('WRKACTJOB SBS(*ALL) JOB(QP0ZSPWP)')"
-system "ADDMSGD MSGID(USR0003) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/bin/nginx -s reload'')) USER(QTMHHTTP)')"
-system "ADDMSGD MSGID(USR0004) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/bin/nginx'')) USER(QTMHHTTP)')"
-system "ADDMSGD MSGID(USR0005) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/bin/nginx -s stop'')) USER(QTMHHTTP)')"
+system "ADDMSGD MSGID(USR0003) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/bin/nginx -s reload'')) USER($I_NGINX_USER)')"
+system "ADDMSGD MSGID(USR0004) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/bin/nginx'')) USER($I_NGINX_USER)')"
+system "ADDMSGD MSGID(USR0005) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/bin/nginx -s stop'')) USER($I_NGINX_USER)')"
 system "ADDMSGD MSGID(USR0006) MSGF(WWWMENU/WWWMNU1) MSG('wrklnk ''/www/.nginx/logs/error.log''')"
 system "ADDMSGD MSGID(USR0007) MSGF(WWWMENU/WWWMNU1) MSG('wrklnk ''/www/.nginx/*''')"
 system "ADDMSGD MSGID(USR0008) MSGF(WWWMENU/WWWMNU1) MSG('QSH CMD(''/QOpenSys/pkgs/bin/nginx -t'')')"
-system "ADDMSGD MSGID(USR0010) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/sbin/php-fpm'')) USER(QTMHHTTP)')"
+system "ADDMSGD MSGID(USR0010) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/sbin/php-fpm'')) USER($I_PHPFPM_USER)')"
 system "ADDMSGD MSGID(USR0011) MSGF(WWWMENU/WWWMNU1) MSG('QSH CMD(''/QOpenSys/usr/bin/sh -c \"/www/.php/bin/stop-php.sh\"'')')"
 system "ADDMSGD MSGID(USR0012) MSGF(WWWMENU/WWWMNU1) MSG('wrklnk ''/www/.php/logs/*''')"
 system "ADDMSGD MSGID(USR0013) MSGF(WWWMENU/WWWMNU1) MSG('wrklnk ''/QOpenSys/etc/php/*''')"
