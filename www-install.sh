@@ -147,6 +147,7 @@ ln -s $CONFFROM $CONFTO
 printf "\n\n"
 printf "#########################\n"
 printf "#    PHP.INI SETTINGS   #\n"
+printf "#    escape / with \\    #\n"
 printf "#########################\n"
 
 # php.ini settings
@@ -242,4 +243,5 @@ sed -i "s/USERNAME_HERE/$I_ODBC_USERNAME/g" /QOpenSys/etc/odbc.ini
 read -p "ODBC password: " I_ODBC_PASSWORD
 sed -i "s/PASSWORD_HERE/$I_ODBC_PASSWORD/g" /QOpenSys/etc/odbc.ini
 
+# TODO: prompt for USER to run PHP/Nginx on WWW Menu
 # TODO: prettify success/no-change output and keep error output raw
