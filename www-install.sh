@@ -253,13 +253,9 @@ sed -i "s/USERNAME_HERE/$I_ODBC_USERNAME/g" /QOpenSys/etc/odbc.ini
 read -p "ODBC password: " I_ODBC_PASSWORD
 sed -i "s/PASSWORD_HERE/$I_ODBC_PASSWORD/g" /QOpenSys/etc/odbc.ini
 
-###################################################
-# SCRIPT DONE: OUTPUT FURTHER INSTRUCTIONS
-###################################################
-
 printf "\n\n"
 printf "############################################################################\n"
-printf "#                                SCRIPT DONE!                              #\n"
+printf "#                               SCRIPT DONE!                               #\n"
 printf "#                                                                          #\n"
 printf "#  * type 'WWW' on 5250 session to control Nginx & PHP-FPM                 #\n"
 printf "#  * create Nginx server blocks in /www/.nginx/sites-available and         #\n"

@@ -13,6 +13,7 @@ Git clone repo OR download and unzip folder onto target server
 Run these commands from BASH (not PASE) terminal on target server
 
 ```
+cd ibmi-www-install-script-files
 chmod +x www-install.sh
 ./www-install.sh
 ```
