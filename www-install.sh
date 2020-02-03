@@ -42,8 +42,11 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # make yum-config-manager command available
 yum -y install yum-utils
 
-# add PHP-FPM repo
+# add PHP-FPM repo (Kevin Adler)
 yum-config-manager --add-repo http://repos.zend.com/ibmiphp/
+
+# add additional PHP extensions repo (Calvin Buckley)
+yum-config-manager --add-repo http://repo.qseco.fr
 
 # update current repos & packages
 yum clean all
