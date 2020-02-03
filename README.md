@@ -47,3 +47,9 @@ Here's a few things this script does that you may want to fork & modify to your 
 * /QOpenSys/pkgs/sbin/php-fpm     # PHP-FPM executable
 * /www/.php                       # Opinionated logs/storage location
 * /www/.nginx                     # Opinionated logs/configs location
+
+# Special Thanks
+
+Special thanks to Kevin Adler, Calvin Buckley, Erwin Earley, Club Seiden, IBM, Zend and
+all others involved with PHP-FPM and it's extensions on IBM i. And to King Harrison for
+creating a community how-to that gave me this idea.
