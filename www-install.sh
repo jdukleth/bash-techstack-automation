@@ -65,7 +65,7 @@ fi
 ###################################################
 # Copy Files For Nginx/PHP-FPM/Menu Configuration
 ###################################################
-cd $SCRIPT_DIR
+cd "$SCRIPT_DIR" || exit
 
 # overwrite files from prior runs if user supplies flag
 if [[ $* == *--nuke-files* ]]; then
@@ -81,7 +81,7 @@ fi
 ###################################################
 # Install IBM i Access ODBC Driver via Yum
 ###################################################
-cd /www/.php/pase-acs/ppc64
+cd /www/.php/pase-acs/ppc64 || exit
 yum -y install ibm-iaccess-*
 
 ###################################################
@@ -114,16 +114,16 @@ printf "#        WWW MENU       #\n"
 printf "#########################\n"
 
 NGINX_USER="QTMHHTTP"
-read -p "Job User for Nginx [$NGINX_USER]: " I_NGINX_USER
+read -r -p "Job User for Nginx [$NGINX_USER]: " I_NGINX_USER
 I_NGINX_USER=${I_NGINX_USER:-$NGINX_USER}
 
 PHPFPM_USER="QTMHHTTP"
-read -p "Job User for PHP-FPM [$PHPFPM_USER]: " I_PHPFPM_USER
+read -r -p "Job User for PHP-FPM [$PHPFPM_USER]: " I_PHPFPM_USER
 I_PHPFPM_USER=${I_PHPFPM_USER:-$PHPFPM_USER}
 
 # give directory ownership based on user(s) running processes
-chown -R $I_PHPFPM_USER /www/.php
-chown -R $I_NGINX_USER /www/.nginx
+chown -R "$I_PHPFPM_USER" /www/.php
+chown -R "$I_NGINX_USER" /www/.nginx
 
 # tie commands to menu options
 system "ADDMSGD MSGID(USR0001) MSGF(WWWMENU/WWWMNU1) MSG('WRKACTJOB SBS(*ALL) JOB(QP0ZSPWP)')"
@@ -171,47 +171,47 @@ printf "#########################\n"
 
 # php.ini settings
 MET="120"
-read -p "max_execution_time [$MET]: " I_MET
+read -r -p "max_execution_time [$MET]: " I_MET
 I_MET=${I_MET:-$MET}
 sed -i "/max_execution_time =/c\\max_execution_time = $I_MET" /QOpenSys/etc/php/php.ini
 
 MEL="2048M"
-read -p "memory_limit [$MEL]: " I_MEL
+read -r -p "memory_limit [$MEL]: " I_MEL
 I_MEL=${I_MEL:-$MEL}
 sed -i "/memory_limit =/c\\memory_limit = $I_MEL" /QOpenSys/etc/php/php.ini
 
 EL="\/www\/.php\/logs\/php.log"
-read -p "error_log [$EL]: " I_EL
+read -r -p "error_log [$EL]: " I_EL
 I_EL=${I_EL:-$EL}
 sed -i "s/;error_log = php_errors.log/error_log = $I_EL/g" /QOpenSys/etc/php/php.ini
 
 FPI="1"
-read -p "cgi.fix_pathinfo [$FPI]: " I_FPI
+read -r -p "cgi.fix_pathinfo [$FPI]: " I_FPI
 I_FPI=${I_FPI:-$FPI}
 sed -i "/cgi.fix_pathinfo=/c\\cgi.fix_pathinfo=$I_FPI" /QOpenSys/etc/php/php.ini
 
 UMF="8M"
-read -p "upload_max_filesize [$UMF]: " I_UMF
+read -r -p "upload_max_filesize [$UMF]: " I_UMF
 I_UMF=${I_UMF:-$UMF}
 sed -i "/upload_max_filesize =/c\\upload_max_filesize = $I_UMF" /QOpenSys/etc/php/php.ini
 
 DTZ="America\/Chicago"
-read -p "date.timezone [$DTZ]: " I_DTZ
+read -r -p "date.timezone [$DTZ]: " I_DTZ
 I_DTZ=${I_DTZ:-$DTZ}
 sed -i "/date.timezone =/c\\date.timezone = $I_DTZ" /QOpenSys/etc/php/php.ini
 
 CCI="\/www\/.php\/ssl\/cacert.pem"
-read -p "curl.cainfo [$CCI]: " I_CCI
+read -r -p "curl.cainfo [$CCI]: " I_CCI
 I_CCI=${I_CCI:-$CCI}
 sed -i "/curl.cainfo =/c\\curl.cainfo = $I_CCI" /QOpenSys/etc/php/php.ini
 
 OCF="\/www\/.php\/ssl\/cacert.pem"
-read -p "openssl.cafile [$OCF]: " I_OCF
+read -r -p "openssl.cafile [$OCF]: " I_OCF
 I_OCF=${I_OCF:-$OCF}
 sed -i "/openssl.cafile=/c\\openssl.cafile=$I_OCF" /QOpenSys/etc/php/php.ini
 
 OCP="\/www\/.php\/ssl\/"
-read -p "openssl.capath [$OCP]: " I_OCP
+read -r -p "openssl.capath [$OCP]: " I_OCP
 I_OCP=${I_OCP:-$OCP}
 sed -i "/openssl.capath=/c\\openssl.capath=$I_OCP" /QOpenSys/etc/php/php.ini
 
@@ -222,7 +222,7 @@ printf "#########################\n"
 
 # change PHP-FPM upstream port to :9090 (default :9000 conflicts with ZendServer's PHP)
 PORT="9090"
-read -p "PHP-FPM Upstream Port [$PORT]: " I_PORT
+read -r -p "PHP-FPM Upstream Port [$PORT]: " I_PORT
 I_PORT=${I_PORT:-$PORT}
 sed -i "/listen = 127.0.0.1:/c\\listen = 127.0.0.1:$I_PORT" /QOpenSys/etc/php/php-fpm.d/www.conf
 sed -i "/server 127.0.0.1:/c\\        server 127.0.0.1:$I_PORT;" /www/.nginx/nginx.conf
@@ -246,18 +246,18 @@ SRLNBR=$(system 'wrksysval qsrlnbr' | grep QSRLNBR | awk '{print $2}')
 DATABASE="S${SRLNBR}"
 HOSTNAME=$(hostname)
 
-read -p "System Hostname [$HOSTNAME]: " I_HOSTNAME
+read -r -p "System Hostname [$HOSTNAME]: " I_HOSTNAME
 I_HOSTNAME=${I_HOSTNAME:-$HOSTNAME}
 sed -i "s/HOSTNAME_HERE/$I_HOSTNAME/g" /QOpenSys/etc/odbc.ini
 
-read -p "ODBC Default Database [$DATABASE]: " I_DATABASE
+read -r -p "ODBC Default Database [$DATABASE]: " I_DATABASE
 I_DATABASE=${I_DATABASE:-$DATABASE}
 sed -i "s/QSRLNBR_HERE/$I_DATABASE/g" /QOpenSys/etc/odbc.ini
 
-read -p "ODBC Username: " I_ODBC_USERNAME
+read -r -p "ODBC Username: " I_ODBC_USERNAME
 sed -i "s/USERNAME_HERE/$I_ODBC_USERNAME/g" /QOpenSys/etc/odbc.ini
 
-read -p "ODBC password: " I_ODBC_PASSWORD
+read -r -p "ODBC password: " I_ODBC_PASSWORD
 sed -i "s/PASSWORD_HERE/$I_ODBC_PASSWORD/g" /QOpenSys/etc/odbc.ini
 
 printf "\n\n"
