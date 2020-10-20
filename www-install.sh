@@ -271,5 +271,3 @@ printf "#  * PHP log stored at /www/.php/logs                                   
 printf "#  * Nginx conf at /www/.nginx/nginx.conf (symlinked to QOpenSys)          #\n"
 printf "#  * php.ini, odbc.ini, extensions, etc found in /QOpenSys/etc/            #\n"
 printf "############################################################################\n"
-
-# TODO: prettify success/no-change output and keep error output raw
