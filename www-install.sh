@@ -199,6 +199,11 @@ read -r -p "upload_max_filesize [$UMF]: " I_UMF
 I_UMF=${I_UMF:-$UMF}
 sed -i "/upload_max_filesize =/c\\upload_max_filesize = $I_UMF" /QOpenSys/etc/php/php.ini
 
+MXL="10080"
+read -r -p "session.gc_maxlifetime [$MXL]: " I_MXL
+I_MXL=${I_MXL:-$MXL}
+sed -i "/session.gc_maxlifetime =/c\\session.gc_maxlifetime = $I_MXL" /QOpenSys/etc/php/php.ini
+
 DTZ="America\/Chicago"
 read -r -p "date.timezone [$DTZ]: " I_DTZ
 I_DTZ=${I_DTZ:-$DTZ}
