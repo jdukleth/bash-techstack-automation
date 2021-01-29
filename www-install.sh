@@ -125,6 +125,10 @@ I_PHPFPM_USER=${I_PHPFPM_USER:-$PHPFPM_USER}
 chown -R "$I_PHPFPM_USER" /www/.php
 chown -R "$I_NGINX_USER" /www/.nginx
 
+# give Nginx/PHP permission on logs
+chmod 755 -R /QOpenSys/var/log/nginx/
+chmod 755 /www/.nginx/nginx.pid
+
 # tie commands to menu options
 system "ADDMSGD MSGID(USR0001) MSGF(WWWMENU/WWWMNU1) MSG('WRKACTJOB SBS(*ALL) JOB(QP0ZSPWP)')"
 system "ADDMSGD MSGID(USR0003) MSGF(WWWMENU/WWWMNU1) MSG('SBMJOB CMD(QSH CMD(''/QOpenSys/pkgs/bin/nginx -s reload'')) JOBQ(QUSRNOMAX) ALWMLTTHD(*YES) USER($I_NGINX_USER) INLLIBL(*JOBD)')"
