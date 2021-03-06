@@ -25,9 +25,8 @@ If you want to overwrite .nginx/.php/.www-menu folders from prior runs add the -
 # What next?
 
 * after this script runs, type `WWW` on a 5250 session to control PHP-FPM & Nginx
-* DB2 extension doesn't exist yet; modify code for ODBC if needed
-* Imagick ext doesn't exist yet; modify code for Zebra_Image if needed
-* Modify code to work with the latest PHP-FPM version on YUM
+* Modify any project code to work with ODBC (db2 extension isn't production ready yet)
+* Modify any project code to work with the latest PHP-FPM version on YUM
 
 # Opinionated
 
